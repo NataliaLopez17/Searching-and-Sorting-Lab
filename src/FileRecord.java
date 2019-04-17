@@ -106,11 +106,29 @@ public class FileRecord implements Comparable<FileRecord> {
 	 * @return - Index of Target Element (-1 if not found)
 	 */
 	public static int binarySearch(FileRecord[] shelve, FileRecord target) {
-		//Add Code
-		//You should implement a helper method and use an anonymous inner class
-		return 0; //Temp return
+		return helperBinary(shelve, target, 0, shelve.length -1);
 	}
-	
+
+	public static int helperBinary(FileRecord[] shelve, FileRecord target, int left, int right) {
+		int mid = (left + right) /2;
+
+		if(left > right) {
+			return -1;
+		}
+
+		if(shelve[mid].compareTo(target) > 0) {
+			return helperBinary(shelve, target, 0, mid - 1);
+		}
+		else if(shelve[mid].compareTo(target) < 0) {
+			return helperBinary(shelve, target, mid + 1, right);
+		}
+		else if(target.equals(shelve[mid])) { 
+			return mid;
+		}
+		return -1;
+	}
+
+
 	/**
 	 * Iterative bubble sort for an array
 	 * @param shelve array to be sorted.
@@ -169,6 +187,19 @@ public class FileRecord implements Comparable<FileRecord> {
 	 * @param shelve - Array to be sorted
 	 */
 	public static void selectionSort(FileRecord[] shelve) {
-		//Add Code Here
+		helperSel(shelve, 0, shelve.length);
+	}
+
+	public static void helperSel(FileRecord[] shelve, int i, int j) {
+		int min = i;
+		for (int k = i + 1; k < j; k++) {
+			if (shelve[k].compareTo(shelve[min]) < 0) {
+				min = k;	
+			}
+		}
+		swap(shelve, min, i);
+		if (i + 1 < j) {
+			helperSel(shelve, i + 1, j);
+		}
 	}
 }
